@@ -9,8 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
-  backendImageName: 'estoque-front'
-  frontendImageName: 'estoque-back'
+  frontendImageName: 'estoque-front'
   dockerUserId: 'renannunes'
   namespaceId: 'renannunes'
   tag: '$(Build.BuildId)'
