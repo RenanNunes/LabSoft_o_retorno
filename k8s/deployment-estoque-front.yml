@@ -16,4 +16,4 @@ spec:
       - name: estoque-front
         image: renannunes/estoque-front:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 80

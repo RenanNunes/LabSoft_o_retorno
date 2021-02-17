@@ -35,7 +35,7 @@ steps:
     command: apply
     arguments: -f k8s/deployment-estoque-front.yml
 - task: Kubernetes@0
-  displayName: kubectl apply service-frontend.yml
+  displayName: kubectl apply service-estoque-front.yml
   inputs:
     connectionType: Kubernetes Service Connection
     kubernetesServiceEndpoint: '$(kubernetesServiceId)'
