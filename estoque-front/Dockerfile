@@ -1,27 +1,20 @@
-# stage1 as builder
-FROM node:10-alpine as builder
-
-WORKDIR /vue-ui
-
-# Copy the package.json and install dependencies
+FROM node:current-alpine AS base
+WORKDIR /base
 COPY package*.json ./
 RUN npm install
-
-# Copy rest of the files
 COPY . .
 
-# Build the project
+FROM base AS build
+ENV NODE_ENV=production
+WORKDIR /build
+COPY --from=base /base ./
 RUN npm run build
 
-
-FROM nginx:alpine as production-build
-COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
-
-## Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copy from the stahg 1
-COPY --from=builder /vue-ui/dist /usr/share/nginx/html
+FROM node:current-alpine AS production
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=build /build/package*.json ./
+COPY --from=build /build/public ./public
 
 EXPOSE 8080
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD npm run serve
