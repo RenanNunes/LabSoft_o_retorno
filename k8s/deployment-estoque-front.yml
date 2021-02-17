@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: estoque-front
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -16,4 +16,4 @@ spec:
       - name: estoque-front
         image: renannunes/estoque-front:latest
         ports:
-        - containerPort: 3000
+        - containerPort: 8080
