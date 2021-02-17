@@ -1,0 +1,53 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+variables:
+  backendImageName: 'estoque-front'
+  frontendImageName: 'estoque-back'
+  dockerUserId: 'renannunes'
+  namespaceId: 'renannunes'
+  tag: '$(Build.BuildId)'
+  kubernetesServiceId: 'okteto_service_connection'
+  DOCKER_BUILDKIT: 1
+steps:
+- task: Docker@2
+  displayName: Criar imagem docker do frontend
+  inputs:
+    repository: '$(dockerUserId)/$(frontendImageName)'
+    command: 'buildAndPush'
+    Dockerfile: 'estoque-front/Dockerfile'
+    containerRegistry: 'dockerHub'
+    tags: |
+      $(tag)
+      latest
+- task: Kubernetes@0
+  displayName: kubectl apply deployment-estoque-front.yml
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: '$(kubernetesServiceId)'
+    namespace: '$(namespaceId)'
+    command: apply
+    arguments: -f k8s/deployment-estoque-front.yml
+- task: Kubernetes@0
+  displayName: kubectl apply service-frontend.yml
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: '$(kubernetesServiceId)'
+    namespace: '$(namespaceId)'
+    command: apply
+    arguments: -f k8s/service-estoque-front.yml
+- task: Kubernetes@0
+  displayName: kubectl update image frontend@deploy
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: '$(kubernetesServiceId)'
+    namespace: '$(namespaceId)'
+    command: set
+    arguments: image deployment/$(frontendImageName) $(frontendImageName)=$(dockerUserId)/$(frontendImageName):$(tag) --record

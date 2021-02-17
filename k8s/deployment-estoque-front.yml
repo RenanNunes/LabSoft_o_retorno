@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: estoque-front
+spec:
+  selector:
+    matchLabels:
+      app: estoque-front
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: estoque-front
+    spec:
+      containers:
+      - name: estoque-front
+        image: renannunes/estoque-front:latest
+        ports:
+        - containerPort: 3000
