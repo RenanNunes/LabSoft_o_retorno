@@ -1,14 +1,8 @@
-FROM node:10.15.0 as ui-builder
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-COPY package.json /usr/src/app/package.json
+FROM node:lts-alpine
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
-RUN npm install -g @vue/cli
-COPY . /usr/src/app
+COPY ./dist .
+EXPOSE 8080
 RUN npm run build
-
-FROM nginx
-COPY  --from=ui-builder /usr/src/app/dist /usr/share/nginx/html
-EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "serve"]
