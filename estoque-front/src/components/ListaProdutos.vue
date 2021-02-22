@@ -1,6 +1,9 @@
 <template>
   <div>
     <b-table :fields="fields" :items="items" hover :currentPage="currentPage" :per-page="perPage">
+      <template #cell(estoque)="row">
+        {{row.item.qtd > 0 ? 'Sim' : 'Não'}}
+      </template>
       <template #cell(detalhes)="row">
         <a :href="`/produtos/detalhar/${row.item.idProduto}`">
           Detalhes
@@ -14,7 +17,7 @@
 <script>
 export default {
   data () {
-    return {
+    let config = {
       currentPage: 1,
       perPage: 20,
       fields: [
@@ -50,10 +53,18 @@ export default {
         }
       ],
     }
+    if (this.estoque == false) {
+      config.fields.splice(4, 0, { key: 'estoque', label: 'Em estoque', })
+    }
+    return config
   },
   props: {
       items: {
         type: Array,
+        required: true,
+      },
+      estoque: {
+        type: Boolean,
         required: true,
       }
   },

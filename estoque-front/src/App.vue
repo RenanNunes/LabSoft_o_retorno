@@ -11,7 +11,7 @@
             <b-dropdown-item to="/produtos/criar">Adicionar produto</b-dropdown-item>
             <b-dropdown-item to="/produtos/listar">Listar produtos</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item to="/estoque">Visualizar estoque</b-nav-item>
+          <b-nav-item to="/produtos/estoque">Visualizar estoque</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

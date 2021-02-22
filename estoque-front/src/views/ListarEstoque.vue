@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container class="container-prod">
-      <ListaProdutos :items="items" :estoque="false" />
+      <ListaProdutos :items="items" :estoque="true" />
   </b-container>
   </div>
 </template>
@@ -58,15 +58,6 @@ export default {
         preco: '11',
         qtd: 12,
         descricao: 'Banana vendida por dúzia',
-        perecivel: true,
-      },
-      {
-        idProduto: 3,
-        nome: 'Uva',
-        distribuidor: 'Mercado Municipal',
-        preco: '6.70',
-        qtd: 0,
-        descricao: 'Uva vendida por dúzia',
         perecivel: true,
       },]
     },
