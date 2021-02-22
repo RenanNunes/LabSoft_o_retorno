@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import CriarProduto from './views/CriarProduto.vue';
 import ListarProduto from './views/ListarProdutos.vue';
 import ListarEstoque from './views/ListarEstoque.vue';
+import PaginaErro404 from './views/PaginaErro404.vue';
 import HelloWorld from './components/HelloWorld.vue';
 
 Vue.use(Router);
@@ -33,7 +34,7 @@ export default new Router({
     {
       path: '*',
       name: 'error404',
-      component: HelloWorld,
+      component: PaginaErro404,
     },
     ],
 });
