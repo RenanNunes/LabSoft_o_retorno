@@ -1,17 +1,17 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="#">Estoque</b-navbar-brand>
+      <b-navbar-brand to="/">Estoque</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item-dropdown href="#" text="Produtos">
-            <b-dropdown-item href="#">Adicionar produto</b-dropdown-item>
-            <b-dropdown-item href="#">Alterar/remover produto</b-dropdown-item>
+          <b-nav-item-dropdown text="Produtos">
+            <b-dropdown-item to="/produtos/criar">Adicionar produto</b-dropdown-item>
+            <b-dropdown-item to="/produtos/listar">Listar produtos</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item href="#">Visualizar estoque</b-nav-item>
+          <b-nav-item to="/estoque">Visualizar estoque</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -20,24 +20,10 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <router-view/>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-  components: {
-  }
-}
-</script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
