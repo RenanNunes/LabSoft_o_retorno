@@ -5,9 +5,9 @@
         {{row.item.qtd > 0 ? 'Sim' : 'Não'}}
       </template>
       <template #cell(detalhes)="row">
-        <a :href="`/produtos/detalhar/${row.item.idProduto}`">
+        <router-link :to="`/produtos/detalhar/${row.item.idProduto}`">
           Detalhes
-        </a>
+        </router-link>
       </template>
     </b-table>
     <b-pagination size="md" align="center" v-model="currentPage" :total-rows="items.length" currentPage="currentPage" :per-page="perPage" />
