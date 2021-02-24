@@ -9,6 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 variables:
+  backendImageName: 'estoque-back'
   frontendImageName: 'estoque-front'
   dockerUserId: 'renannunes'
   namespaceId: 'renannunes'
@@ -16,6 +17,16 @@ variables:
   kubernetesServiceId: 'okteto_service_connection'
   DOCKER_BUILDKIT: 1
 steps:
+- task: Docker@2
+  displayName: Criar imagem docker do backend
+  inputs:
+    repository: '$(dockerUserId)/$(backendImageName)'
+    command: 'buildAndPush'
+    Dockerfile: 'estoque-back/Dockerfile'
+    containerRegistry: 'dockerHub'
+    tags: |
+      $(tag)
+      latest
 - task: Docker@2
   displayName: Criar imagem docker do frontend
   inputs:
@@ -27,6 +38,14 @@ steps:
       $(tag)
       latest
 - task: Kubernetes@0
+  displayName: kubectl apply deployment-estoque-back.yml
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: '$(kubernetesServiceId)'
+    namespace: '$(namespaceId)'
+    command: apply
+    arguments: -f k8s/deployment-estoque-back.yml
+- task: Kubernetes@0
   displayName: kubectl apply deployment-estoque-front.yml
   inputs:
     connectionType: Kubernetes Service Connection
@@ -35,6 +54,14 @@ steps:
     command: apply
     arguments: -f k8s/deployment-estoque-front.yml
 - task: Kubernetes@0
+  displayName: kubectl apply service-estoque-back.yml
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: '$(kubernetesServiceId)'
+    namespace: '$(namespaceId)'
+    command: apply
+    arguments: -f k8s/service-estoque-back.yml
+- task: Kubernetes@0
   displayName: kubectl apply service-estoque-front.yml
   inputs:
     connectionType: Kubernetes Service Connection
@@ -42,6 +69,14 @@ steps:
     namespace: '$(namespaceId)'
     command: apply
     arguments: -f k8s/service-estoque-front.yml
+- task: Kubernetes@0
+  displayName: kubectl update image backend@deploy
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: '$(kubernetesServiceId)'
+    namespace: '$(namespaceId)'
+    command: set
+    arguments: image deployment/$(backendImageName) $(backendImageName)=$(dockerUserId)/$(backendImageName):$(tag) --record
 - task: Kubernetes@0
   displayName: kubectl update image frontend@deploy
   inputs:

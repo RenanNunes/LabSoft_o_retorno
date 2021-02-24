@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: estoque-back
+spec:
+  selector:
+    matchLabels:
+      app: estoque-back
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: estoque-back
+    spec:
+      containers:
+      - name: estoque-back
+        image: renannunes/estoque-back:latest
+        ports:
+        - containerPort: 3000
