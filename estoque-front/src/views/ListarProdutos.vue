@@ -8,7 +8,7 @@
 
 <script>
 import ListaProdutos from '@/components/ListaProdutos.vue';
-const API_URL = process.env.NODE_ENV  != 'development' ? 'http://localhost:3000' : 'https://estoque-back-renannunes.cloud.okteto.net';
+const API_URL = process.env.NODE_ENV  == 'development' ? 'http://localhost:3000' : 'https://estoque-back-renannunes.cloud.okteto.net';
 export default {
   name: 'listarProduto',
   components: {
