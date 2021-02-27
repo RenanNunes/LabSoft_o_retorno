@@ -99,7 +99,6 @@ export default {
   methods: {
     async onSubmit(evt) {
       evt.preventDefault();
-      console.log(JSON.stringify(this.prod));
       const result = await fetch(API_URL+'/produtos/', {
         method: 'POST',
         body: JSON.stringify(this.prod),
