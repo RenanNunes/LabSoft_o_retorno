@@ -24,7 +24,7 @@ export default {
   },
   methods:{
     async onStart() {
-      // const result = await fetch(API_URL+'/experiencia/buscar', {
+      // const result = await fetch(API_URL+'/produtos/listar', {
       //   method: 'GET',
       //   headers: {
       //     'content-type': 'application/json',

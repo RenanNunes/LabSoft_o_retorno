@@ -72,7 +72,7 @@
       <b-button type="reset" variant="danger" class="botao-form">Limpar</b-button>
       <br />
       <br />
-      <b-alert :show="!!success" variant="success">Obrigado por compartilhar ^^</b-alert>
+      <b-alert :show="!!success" variant="success">Produto cadastrado com sucesso ^^</b-alert>
       <b-alert :show="!!error" variant="warning">{{error}}</b-alert>
     </b-form>
   </div>
@@ -100,7 +100,7 @@ export default {
     async onSubmit(evt) {
       evt.preventDefault();
       console.log(JSON.stringify(this.prod));
-      const result = await fetch(API_URL+'/produto/criar', {
+      const result = await fetch(API_URL+'/produtos/', {
         method: 'POST',
         body: JSON.stringify(this.prod),
         headers: {
@@ -120,8 +120,6 @@ export default {
         this.prod.perecivel = false;
         this.error = '';
         this.success = true;
-        const rota = '/produtos/listar';
-        this.$router.push({ path: rota });
       }
     },
     onReset (evt) {

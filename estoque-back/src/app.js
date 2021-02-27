@@ -1,12 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const router = express.Router();
 
 //Rotas
 const index = require('./routes/index');
-const testRoute = require('./routes/testRoute');
+const productRoute = require('./routes/productRoute');
 
+app.use(cors());
 app.use('/', index);
-app.use('/test', testRoute);
+app.use('/produtos', productRoute);
 
 module.exports = app;

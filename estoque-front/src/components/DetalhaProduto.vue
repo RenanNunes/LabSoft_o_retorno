@@ -108,7 +108,7 @@ export default {
     },
     async save_changes() {
       console.log(JSON.stringify(this.prod));
-      // const result = await fetch(API_URL+'/produto/editar', {
+      // const result = await fetch(API_URL+'/produtos/id=' + id, {
       //   method: 'PUT',
       //   body: JSON.stringify(this.prod),
       //   headers: {

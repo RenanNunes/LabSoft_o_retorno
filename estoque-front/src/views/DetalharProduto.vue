@@ -22,7 +22,7 @@ export default {
   },
   async created() {
     const id = this.$route.params && this.$route.params.id;
-    // const result = await fetch(API_URL + '/produtos?_id=' + id, {
+    // const result = await fetch(API_URL + '/produtos?id=' + id, {
     //   method: 'GET',
     //   headers: {
     //     'content-type': 'application/json',
