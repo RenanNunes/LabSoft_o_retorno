@@ -84,13 +84,13 @@
 </template>
 
 <script>
-// const API_URL = process.env.API_URL || 'http://localhost:3000';
+const API_URL = process.env.NODE_ENV  == 'development' ? 'http://localhost:3000' : 'https://estoque-back-renannunes.cloud.okteto.net';
 export default {
   data() {
     return {
       edit: false,
       error: '',
-      sucess: '',
+      success: '',
     }
   },
   props: {
@@ -107,32 +107,32 @@ export default {
       this.edit = !this.edit
     },
     async save_changes() {
-      console.log(JSON.stringify(this.prod));
-      // const result = await fetch(API_URL+'/produtos/id=' + id, {
-      //   method: 'PUT',
-      //   body: JSON.stringify(this.prod),
-      //   headers: {
-      //     'content-type': 'application/json',
-      //   },
-      // });
-      // const resultJSON = await result.json();
+      const result = await fetch(API_URL+'/produtos/' + this.prod._id, {
+        method: 'PUT',
+        body: JSON.stringify(this.prod),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+      const resultJSON = await result.json();
 
-      // if (resultJSON.erro) {
+      if (resultJSON.erro) {
         this.error = 'Falha';
-        this.success = 'a';
-      // } else {
-      //   this.edit = !this.edit;
-      //   this.success = true;
-      // }
+        this.success = '';
+      } else {
+        this.error = '';
+        this.edit = !this.edit;
+        this.success = true;
+      }
     },
     apagar() {
-      // const id = this.prod && this.prod._id;
-      // fetch(API_URL + '/produtos?_id=' + id, {
-      //   method: 'DELETE',
-      //   headers: {
-      //     'content-type': 'application/json',
-      //   },
-      // }).then(() => this.$router.push({ path: '/produtos/listar' }));
+      const id = this.prod && this.prod._id;
+      fetch(API_URL + '/produtos?' + id, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+        },
+      }).then(() => this.$router.push({ path: '/produtos/listar' }));
     },
   }
 }

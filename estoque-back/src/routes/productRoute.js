@@ -8,7 +8,7 @@ router.post('/', jsonParser, controller.create);
 router.get('/listar', controller.list);
 router.get('/estoque', controller.inventory);
 router.get('/:id', controller.get);
-router.put('/:id', controller.edit);
+router.put('/:id', jsonParser, controller.edit);
 router.delete('/:id', controller.delete);
 
 module.exports = router;
