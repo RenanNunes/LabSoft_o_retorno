@@ -8,7 +8,7 @@
 
 <script>
 import ListaProdutos from '@/components/ListaProdutos.vue';
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+const API_URL = process.env.NODE_ENV  != 'development' ? 'http://localhost:3000' : 'https://estoque-back-renannunes.cloud.okteto.net';
 export default {
   name: 'listarProduto',
   components: {
@@ -25,7 +25,6 @@ export default {
   methods:{
     async onStart() {
       console.log(API_URL)
-      console.log(process.env)
       const result = await fetch(API_URL+'/produtos/listar', {
         method: 'GET',
         headers: {

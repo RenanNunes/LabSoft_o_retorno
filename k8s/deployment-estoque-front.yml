@@ -17,6 +17,3 @@ spec:
         image: renannunes/estoque-front:latest
         ports:
         - containerPort: 80
-        env:
-        - name: API_URL
-          value: https://estoque-back-renannunes.cloud.okteto.net/

@@ -79,7 +79,7 @@
 </template>
 
 <script>
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+const API_URL = process.env.NODE_ENV  == 'development' ? 'http://localhost:3000' : 'https://estoque-back-renannunes.cloud.okteto.net';
 export default {
   data() {
     return {
