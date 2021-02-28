@@ -127,7 +127,7 @@ export default {
     },
     apagar() {
       const id = this.prod && this.prod._id;
-      fetch(API_URL + '/produtos?' + id, {
+      fetch(API_URL + '/produtos/' + id, {
         method: 'DELETE',
         headers: {
           'content-type': 'application/json',

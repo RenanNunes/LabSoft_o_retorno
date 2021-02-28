@@ -5,7 +5,7 @@
         {{row.item.qtd > 0 ? 'Sim' : 'Não'}}
       </template>
       <template #cell(detalhes)="row">
-        <router-link :to="`/produtos/detalhar/${row.item.idProduto}`">
+        <router-link :to="`/produtos/detalhar/${row.item._id}`">
           Detalhes
         </router-link>
       </template>
