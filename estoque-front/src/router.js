@@ -5,6 +5,7 @@ import DetalharProduto from './views/DetalharProduto.vue';
 import ListarProduto from './views/ListarProdutos.vue';
 import ListarEstoque from './views/ListarEstoque.vue';
 import PaginaInicial from './views/PaginaInicial.vue';
+import PaginaLogin from './views/PaginaLogin.vue';
 import PaginaErro404 from './views/PaginaErro404.vue';
 
 Vue.use(Router);
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: PaginaInicial,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: PaginaLogin,
     },
     {
       path: '/produtos/criar',
