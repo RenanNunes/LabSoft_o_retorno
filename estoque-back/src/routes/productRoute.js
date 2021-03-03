@@ -10,5 +10,6 @@ router.get('/estoque', controller.inventory);
 router.get('/:id', controller.get);
 router.put('/:id', jsonParser, controller.edit);
 router.delete('/:id', controller.delete);
+router.post('/comprar', jsonParser, controller.buy);
 
 module.exports = router;

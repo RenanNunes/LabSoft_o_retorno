@@ -66,3 +66,50 @@ exports.delete = (req, res, next) => {
     };
     res.json(result);
 };
+
+exports.buy = async (req, res, next) => {
+    let prods = req.body && req.body.data;
+    try {
+        let products_available = true;
+        let msg = {};
+        let i;
+        // verify qtd available and qtd requested
+        for (i = 0; i < prods.length; i++) {
+            item = await products.find({ "_id": prods[i]['id'] });
+            if (item.length == 0) {
+                products_available = false;
+                break;
+            } else {
+                if (item[0].qtd < prods[i]['qtd']) {
+                    products_available = false;
+                    break;
+                }
+            }
+        }
+        if (products_available == true) {
+            // if qtd is enough, update the inventory
+            for (i = 0; i < prods.length; i++) {
+              result = await products.update({ "_id": prods[i]['id'] }, { $inc: { 'qtd': -prods[i]['qtd'] }});
+            }
+            msg = {
+                erro: false,
+                mensagem: 'Atualizado com sucesso',
+            };
+        } else {
+            msg = {
+                erro: true,
+                mensagem: 'Não temos a quantidade de produtos requisitada em estoque',
+            };
+        }
+        res.status(200);
+        res.json(msg);
+
+    } catch (error) {
+        const erro = {
+            erro: true,
+            mensagem: error.message,
+        };
+        res.status(500);
+        res.json(erro);
+    }
+}
