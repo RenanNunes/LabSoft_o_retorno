@@ -75,12 +75,12 @@ exports.buy = async (req, res, next) => {
         let i;
         // verify qtd available and qtd requested
         for (i = 0; i < prods.length; i++) {
-            item = await products.find({ "_id": prods[i]['id'] });
+            item = await products.find({ "_id": prods[i]['product'] && prods[i]['product']['id'] });
             if (item.length == 0) {
                 products_available = false;
                 break;
             } else {
-                if (item[0].qtd < prods[i]['qtd']) {
+                if (item[0].qtd < prods[i]['quantity']) {
                     products_available = false;
                     break;
                 }
@@ -89,7 +89,7 @@ exports.buy = async (req, res, next) => {
         if (products_available == true) {
             // if qtd is enough, update the inventory
             for (i = 0; i < prods.length; i++) {
-              result = await products.update({ "_id": prods[i]['id'] }, { $inc: { 'qtd': -prods[i]['qtd'] }});
+              result = await products.update({ "_id": prods[i]['product'] && prods[i]['product']['id'] }, { $inc: { 'qtd': -prods[i]['quantity'] }});
             }
             msg = {
                 erro: false,
