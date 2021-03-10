@@ -10,7 +10,7 @@ import PaginaErro404 from './views/PaginaErro404.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -27,21 +27,33 @@ export default new Router({
       path: '/produtos/criar',
       name: 'criarProduto',
       component: CriarProduto,
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: '/produtos/detalhar/:id',
       name: 'detalharProduto',
       component: DetalharProduto,
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: '/produtos/listar',
       name: 'listarProduto',
       component: ListarProduto,
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: '/produtos/estoque',
       name: 'listarEstoque',
       component: ListarEstoque,
+      meta: {
+        requiresAuth: true
+      },
     },
     {
       path: '*',
@@ -50,3 +62,19 @@ export default new Router({
     },
     ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!window.$cookies.get("user_id")) {
+      next({ name: 'login' })
+    } else {
+      next() // go to wherever I'm going
+    }
+  } else {
+    next() // does not require auth, make sure to always call next()!
+  }
+})
+
+export default router

@@ -16,7 +16,8 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/login">Login/Log out</b-nav-item>
+          <b-nav-item to="/login" v-if='!this.$cookies.get("user_id")'>Login</b-nav-item>
+          <b-nav-item @click="logout" v-else>Log out</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -24,6 +25,21 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    logout () {
+      this.$cookies.remove("user_id");
+      this.$router.push({ path: '/login' })
+    },
+  }
+}
+</script>
+
 
 <style>
 </style>

@@ -2,7 +2,9 @@
   <div class="form-login">
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <h3>Login</h3>
-      <br />
+      <hr />
+      <p>O login é necessário para acessar as páginas de Produtos e de Estoque</p>
+      <hr />
       <b-form-group id="userLabel"
                     label="Email cadastrado:"
                     label-for="user">
@@ -67,6 +69,8 @@ export default {
         this.login.senha = '';
         this.error = '';
         this.success = true;
+        this.$cookies.set("user_id", resultJSON.token);
+        this.$router.push({ path: '/produtos/listar' });
       }
     },
     onReset (evt) {
