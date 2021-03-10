@@ -90,6 +90,7 @@ export default {
         qtd: '',
         descricao: '',
         perecivel: false,
+        idConta: this.$cookies.get("user_id"),
       },
       error: '',
       success: '',

@@ -24,8 +24,7 @@ export default {
   },
   methods:{
     async onStart() {
-      console.log(API_URL)
-      const result = await fetch(API_URL+'/produtos/listar', {
+      const result = await fetch(API_URL + '/produtos/listar/' + this.$cookies.get("user_id"), {
         method: 'GET',
         headers: {
           'content-type': 'application/json',

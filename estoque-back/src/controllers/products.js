@@ -26,8 +26,20 @@ exports.list = async (req, res, next) => {
     res.json(items);
 };
 
+exports.listSeller = async (req, res, next) => {
+    const id = req.params.id;
+    items = await products.find({ "idConta": id });
+    res.json(items);
+};
+
 exports.inventory = async (req, res, next) => {
     items = await products.find({ "qtd": { $gt: 0 } });
+    res.json(items);
+};
+
+exports.inventorySeller = async (req, res, next) => {
+    const id = req.params.id;
+    items = await products.find({ $and : [{ "idConta": id }, { "qtd": { $gt: 0 } }]});
     res.json(items);
 };
 
