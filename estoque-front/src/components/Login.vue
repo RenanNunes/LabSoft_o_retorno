@@ -37,7 +37,9 @@
 </template>
 
 <script>
+var shajs = require('sha.js');
 const API_URL = process.env.NODE_ENV  == 'development' ? 'http://localhost:3000' : 'https://estoque-back-renannunes.cloud.okteto.net';
+
 export default {
   data() {
     return {
@@ -52,10 +54,12 @@ export default {
   },
   methods: {
     async onSubmit(evt) {
+      let encoded_password = shajs('sha256').update(this.login.senha).digest('hex');
+      let login_to_send = { user: this.login.user, senha: encoded_password};
       evt.preventDefault();
       const result = await fetch(API_URL+'/login/', {
         method: 'POST',
-        body: JSON.stringify(this.login),
+        body: JSON.stringify(login_to_send),
         headers: {
           'content-type': 'application/json',
         },
