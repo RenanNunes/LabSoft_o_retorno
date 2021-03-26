@@ -13,4 +13,9 @@ app.use('/', index);
 app.use('/login', loginRoute);
 app.use('/produtos', productRoute);
 
+//Broker
+const broker = require('./broker/broker.js')
+broker.sendTask("order", {"message": "Hello world from teste!"});
+broker.receiveTask("order", (reply) => console.log("Processing order: ", reply), 60000);
+
 module.exports = app;
