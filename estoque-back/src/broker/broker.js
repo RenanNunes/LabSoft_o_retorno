@@ -1,7 +1,7 @@
 const redis = require("redis");
 
 const connectionParameters = {
-	host: "redis.redis-john2509",
+	host: "redis.redis-renannunes",
 	port: 6379,
 	password: "okteto"
 }
